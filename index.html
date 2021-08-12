@@ -57,7 +57,6 @@ function toDOT(plan) {
     // Edges
     dot += "\n  {" + preconditions + "} -> a" + i + " -> {" + effects + "}";
   }
-  console.log(dot);
   return dot += '\n}';
 }
 function download(filename, text) {

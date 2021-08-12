@@ -1,7 +1,7 @@
 # Classical Plan Viewer
 **Graph visualization of classical plans**
 
-Convert a JSON-based user provided plan into a [DOT](https://www.graphviz.org/doc/info/lang.html) graph to be client-rendered using [d3-graphviz](https://github.com/magjac/d3-graphviz).
+Convert a JSON-based user-provided plan into a [DOT](https://www.graphviz.org/doc/info/lang.html) graph to be client-rendered using [d3-graphviz](https://github.com/magjac/d3-graphviz).
 The plan format is made of an array of action objects, each object with an action name, arrays of parameters, preconditions and effects.
 Arrays can be empty, while all leaf elements are strings.
 The input format and visualization may change to support more elements, use with caution.
@@ -17,5 +17,5 @@ The input format and visualization may change to support more elements, use with
 ]
 ```
 
-Modify the ``toDOT(plan)`` function to return a different DOT description to be visualized.
-This project is the counterpart of [HTN Plan Viewer](../../../HTN_Plan_Viewer);
+Modify the ``toDOT(plan)`` function to return a different DOT description to be visualized.  
+This project is the counterpart of [HTN Plan Viewer](../../../HTN_Plan_Viewer).
