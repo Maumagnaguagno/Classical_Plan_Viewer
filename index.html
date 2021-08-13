@@ -30,34 +30,30 @@
 <script>
 var dot, graphviz = d3.select('#graph').graphviz({width: window.innerWidth - 20, height: window.innerHeight - 20, fit: true}).on('initEnd', render);
 function render() {
-  graphviz.renderDot(toDOT(document.getElementById('plan').value));
+  graphviz.renderDot(toDOT(JSON.parse(document.getElementById('plan').value)));
 }
 function toDOT(plan) {
-  plan = JSON.parse(plan);
   dot = "digraph Classical {\n  rankdir=LR";
   for(var i = 0; i < plan.length; ++i) {
     // Nodes
     dot += '\n  a' + i + ' [shape=rectangle label="' + plan[i]["action"] + "(" + plan[i]["parameters"].join(' ') + ')"]';
-    var preconditions = "";
+    var preconditions = "", effects = "";
     for(var j = 0; j < plan[i]["precondition"].length; ++j)
     {
-      var name = plan[i]["precondition"][j];
-      var namerep =  " p" + i + name.replace(/[\s=]/g, "_");
+      var name = plan[i]["precondition"][j], namerep =  " p" + i + name.replace(/[\s=]/g, "_");
       preconditions += namerep;
       dot += "\n " + namerep + ' [label="' + name + '"]';
     }
-    var effects = "";
     for(var j = 0; j < plan[i]["effect"].length; ++j)
     {
-      var name = plan[i]["effect"][j];
-      var namerep =  " p" + (i+1) + name.replace(/[\s=]/g, "_");
+      var name = plan[i]["effect"][j], namerep =  " p" + (i+1) + name.replace(/[\s=]/g, "_");
       effects += namerep;
       dot += "\n " + namerep + ' [label="' + name + '"]';
     }
     // Edges
     dot += "\n  {" + preconditions + "} -> a" + i + " -> {" + effects + "}";
   }
-  return dot += '\n}';
+  return dot += "\n}";
 }
 function download(filename, text) {
   var element = document.createElement('a');
