@@ -36,17 +36,17 @@ function toDOT(plan) {
   dot = "digraph Classical {\n  rankdir=LR";
   for(var i = 0; i < plan.length; ++i) {
     // Nodes
-    dot += '\n  a' + i + ' [shape=rectangle label="' + plan[i]["action"] + "(" + plan[i]["parameters"].join(' ') + ')"]';
+    dot += '\n  a' + i + ' [shape=rectangle label="' + plan[i].action + "(" + plan[i].parameters.join(' ') + ')"]';
     var preconditions = "", effects = "";
-    for(var j = 0; j < plan[i]["precondition"].length; ++j)
+    for(var j = 0; j < plan[i].precondition.length; ++j)
     {
-      var name = plan[i]["precondition"][j], namerep =  " p" + i + name.replace(/[()\s=-]/g, "_");
+      var name = plan[i].precondition[j], namerep =  " p" + i + name.replace(/[()\s=-]/g, "_");
       preconditions += namerep;
       dot += "\n " + namerep + ' [label="' + name + '"]';
     }
-    for(var j = 0; j < plan[i]["effect"].length; ++j)
+    for(var j = 0; j < plan[i].effect.length; ++j)
     {
-      var name = plan[i]["effect"][j], namerep =  " p" + (i+1) + name.replace(/[()\s=-]/g, "_");
+      var name = plan[i].effect[j], namerep =  " p" + (i+1) + name.replace(/[()\s=-]/g, "_");
       effects += namerep;
       dot += "\n " + namerep + ' [label="' + name + '"]';
     }
