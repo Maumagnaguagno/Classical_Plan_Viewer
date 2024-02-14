@@ -13,10 +13,12 @@
 [
   {"action": "pickup", "parameters": ["a"],
     "precondition": ["clear a", "ontable a"],
-    "effect": ["holding a", "not clear a", "not ontable a"]},
+    "effect": ["holding a", "not clear a", "not ontable a"],
+    "description": "hold clear block a from table"},
   {"action": "stack", "parameters": ["a", "b"],
     "precondition": ["clear b", "holding a", "not = a b"],
-    "effect": ["clear a", "on a b", "not clear b", "not holding a"]}
+    "effect": ["clear a", "on a b", "not clear b", "not holding a"],
+    "description": "stack block a on clear block b"}
 ]
 </textarea>
 <button style=display:block;width:50%;position:absolute onclick=download('graph.dot',dot)>Download DOT</button>
@@ -36,8 +38,10 @@ function toDOT(plan) {
   dot = "digraph Classical {\n  rankdir=LR";
   for(var i = 0; i < plan.length; ++i) {
     // Nodes
-    dot += '\n  a' + i + ' [shape=rectangle label="' + plan[i].action + "(" + plan[i].parameters.join(' ') + ')"]';
     var preconditions = "", effects = "";
+    dot += '\n  a' + i + ' [shape=box label="' + plan[i].action + "(" + plan[i].parameters.join(' ') + ')';
+    if(plan[i].description) dot += '" tooltip="' + plan[i].description;
+    dot += '"]';
     for(var j = 0; j < plan[i].precondition.length; ++j)
     {
       var name = plan[i].precondition[j], namerep =  " p" + i + name.replace(/[()\s=-]/g, "_");
