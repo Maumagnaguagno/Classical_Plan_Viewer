@@ -31,28 +31,24 @@
 <script src=https://unpkg.com/d3-graphviz@4.0.0/build/d3-graphviz.min.js></script>
 <script>
 var dot, graphviz = d3.select('#graph').graphviz({width: window.innerWidth - 20, height: window.innerHeight - 20, fit: true}).on('initEnd', render);
-function render() {
-  graphviz.renderDot(toDOT(JSON.parse(document.getElementById('plan').value)));
-}
+function render() { graphviz.renderDot(toDOT(JSON.parse(document.getElementById('plan').value))); }
 function toDOT(plan) {
   dot = "digraph Classical {\n  rankdir=LR";
-  for(var i = 0; i < plan.length; ++i) {
+  for(var i = 0, state = {}; i < plan.length; ++i) {
     // Nodes
     var preconditions = "", effects = "";
     dot += '\n  a' + i + ' [shape=box label="' + plan[i].action + "(" + plan[i].parameters.join(' ') + ')';
     if(plan[i].description) dot += '" tooltip="' + plan[i].description;
     dot += '"]';
-    for(var j = 0; j < plan[i].precondition.length; ++j)
-    {
-      var name = plan[i].precondition[j], namerep =  " p" + i + name.replace(/[()\s=-]/g, "_");
-      preconditions += namerep;
-      dot += "\n " + namerep + ' [label="' + name + '"]';
+    for(var j = 0; j < plan[i].precondition.length; ++j) {
+      var name = plan[i].precondition[j], rep = name.replace(/^not /,'');
+      if(!state[rep]) dot += "\n " + (state[rep] = " p" + i + name.replace(/[\s=-]/g, "_")) + ' [label="' + name + '"]';
+      preconditions += state[rep];
     }
-    for(var j = 0; j < plan[i].effect.length; ++j)
-    {
-      var name = plan[i].effect[j], namerep =  " p" + (i+1) + name.replace(/[()\s=-]/g, "_");
-      effects += namerep;
-      dot += "\n " + namerep + ' [label="' + name + '"]';
+    for(var j = 0; j < plan[i].effect.length; ++j) {
+      var name = plan[i].effect[j], rep = name.replace(/^not /,'');
+      dot += "\n " + (state[rep] = " p" + (i + 1) + name.replace(/[\s=-]/g, "_")) + ' [label="' + name + '"]';
+      effects += state[rep];
     }
     // Edges
     dot += "\n  {" + preconditions + "} -> a" + i + " -> {" + effects + "}";
