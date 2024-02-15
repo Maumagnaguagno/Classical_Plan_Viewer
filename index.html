@@ -30,23 +30,23 @@
 <script src=https://unpkg.com/@hpcc-js/wasm@1.4.1/dist/index.min.js type=javascript/worker></script>
 <script src=https://unpkg.com/d3-graphviz@4.0.0/build/d3-graphviz.min.js></script>
 <script>
-var dot, graphviz = d3.select('#graph').graphviz({width: window.innerWidth - 20, height: window.innerHeight - 20, fit: true}).on('initEnd', render);
+var dot, graphviz = d3.select("#graph").graphviz({width: window.innerWidth - 20, height: window.innerHeight - 20, fit: true}).on("initEnd", render);
 function render() {
-  var plan = JSON.parse(document.getElementById('plan').value);
+  var plan = JSON.parse(document.getElementById("plan").value);
   dot = "digraph Classical {\n  rankdir=LR";
   for(var i = 0, state = {}; i < plan.length; ++i) {
     // Nodes
     var preconditions = "", effects = "";
-    dot += '\n  a' + i + ' [shape=box label="' + plan[i].action + "(" + plan[i].parameters.join(' ') + ')';
+    dot += "\n  a" + i + ' [shape=box label="' + plan[i].action + "(" + plan[i].parameters.join(" ") + ")";
     if(plan[i].description) dot += '" tooltip="' + plan[i].description;
     dot += '"]';
     for(var j = 0; j < plan[i].precondition.length; ++j) {
-      var name = plan[i].precondition[j], rep = name.replace(/^not /,'');
+      var name = plan[i].precondition[j], rep = name.replace(/^not /,"");
       if(!state[rep]) dot += "\n " + (state[rep] = " p" + i + name.replace(/[ =-]/g, "_")) + ' [label="' + name + '"]';
       preconditions += state[rep];
     }
     for(var j = 0; j < plan[i].effect.length; ++j) {
-      var name = plan[i].effect[j], rep = name.replace(/^not /,'');
+      var name = plan[i].effect[j], rep = name.replace(/^not /,"");
       dot += "\n " + (state[rep] = " p" + (i + 1) + name.replace(/[ =-]/g, "_")) + ' [label="' + name + '"]';
       effects += state[rep];
     }
@@ -57,15 +57,15 @@ function render() {
   graphviz.renderDot(dot += "\n}");
 }
 function download(filename, text) {
-  var element = document.createElement('a');
-  element.setAttribute('href', 'data:text/plain;charset=utf-8,' + encodeURIComponent(text));
-  element.setAttribute('download', filename);
-  element.style.display = 'none';
+  var element = document.createElement("a");
+  element.setAttribute("href", "data:text/plain;charset=utf-8," + encodeURIComponent(text));
+  element.setAttribute("download", filename);
+  element.style.display = "none";
   document.body.appendChild(element);
   element.click();
   document.body.removeChild(element);
 }
-window.onresize = function() { d3.select('#graph').selectWithoutDataPropagation('svg').attr('width', window.innerWidth - 20).attr('height', window.innerHeight - 20); };
+window.onresize = function() { d3.select("#graph").selectWithoutDataPropagation("svg").attr("width", window.innerWidth - 20).attr("height", window.innerHeight - 20); };
 </script>
 </body>
 </html>
