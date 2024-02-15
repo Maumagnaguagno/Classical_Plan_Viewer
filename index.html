@@ -12,13 +12,13 @@
 <textarea id=plan rows=10 cols=70 style=white-space:pre>
 [
   {"action": "pickup", "parameters": ["a"],
-    "precondition": ["clear a", "ontable a"],
-    "effect": ["holding a", "not clear a", "not ontable a"],
-    "description": "hold clear block a from table"},
+   "precondition": ["clear a", "ontable a"],
+   "effect": ["holding a", "not clear a", "not ontable a"],
+   "description": "hold clear block a from table"},
   {"action": "stack", "parameters": ["a", "b"],
-    "precondition": ["clear b", "holding a", "not = a b"],
-    "effect": ["clear a", "on a b", "not clear b", "not holding a"],
-    "description": "stack block a on clear block b"}
+   "precondition": ["clear b", "holding a", "not = a b"],
+   "effect": ["clear a", "on a b", "not clear b", "not holding a"],
+   "description": "stack block a on clear block b"}
 ]
 </textarea>
 <button style=display:block;width:50%;position:absolute onclick=download('graph.dot',dot)>Download DOT</button>
@@ -31,8 +31,8 @@
 <script src=https://unpkg.com/d3-graphviz@4.0.0/build/d3-graphviz.min.js></script>
 <script>
 var dot, graphviz = d3.select('#graph').graphviz({width: window.innerWidth - 20, height: window.innerHeight - 20, fit: true}).on('initEnd', render);
-function render() { graphviz.renderDot(toDOT(JSON.parse(document.getElementById('plan').value))); }
-function toDOT(plan) {
+function render() {
+  var plan = JSON.parse(document.getElementById('plan').value);
   dot = "digraph Classical {\n  rankdir=LR";
   for(var i = 0, state = {}; i < plan.length; ++i) {
     // Nodes
@@ -54,7 +54,7 @@ function toDOT(plan) {
     dot += "\n  {" + preconditions + "} -> a" + i + " -> {" + effects + "}";
     if(i) dot += "\n  a" + (i - 1) + " -> a" + i + "[style=invis]";
   }
-  return dot += "\n}";
+  graphviz.renderDot(dot += "\n}");
 }
 function download(filename, text) {
   var element = document.createElement('a');

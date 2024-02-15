@@ -4,7 +4,7 @@
 Convert a JSON plan into a [DOT](https://www.graphviz.org/doc/info/lang.html) graph to be client-rendered using [d3-graphviz](https://github.com/magjac/d3-graphviz).
 The plan format is made of an array of action objects, each action with at least a name, arrays of parameters, preconditions and effects.
 Arrays can be empty, while all leaf elements are strings.
-The input format and visualization may change to support more elements, use with caution.
+The input format and visualization can be modified to support more elements.
 
 ```Json
 [
@@ -16,5 +16,5 @@ The input format and visualization may change to support more elements, use with
 ]
 ```
 
-Modify the ``toDOT(plan)`` function to return a different DOT description to be visualized.  
+Modify the ``render()`` function to return a different DOT description to be visualized.  
 This project is the counterpart of [HTN Plan Viewer](../../../HTN_Plan_Viewer).
