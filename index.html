@@ -42,12 +42,12 @@ function render() {
     dot += '"]';
     for(var j = 0; j < plan[i].precondition.length; ++j) {
       var name = plan[i].precondition[j], rep = name.replace(/^not /,'');
-      if(!state[rep]) dot += "\n " + (state[rep] = " p" + i + name.replace(/[\s=-]/g, "_")) + ' [label="' + name + '"]';
+      if(!state[rep]) dot += "\n " + (state[rep] = " p" + i + name.replace(/[ =-]/g, "_")) + ' [label="' + name + '"]';
       preconditions += state[rep];
     }
     for(var j = 0; j < plan[i].effect.length; ++j) {
       var name = plan[i].effect[j], rep = name.replace(/^not /,'');
-      dot += "\n " + (state[rep] = " p" + (i + 1) + name.replace(/[\s=-]/g, "_")) + ' [label="' + name + '"]';
+      dot += "\n " + (state[rep] = " p" + (i + 1) + name.replace(/[ =-]/g, "_")) + ' [label="' + name + '"]';
       effects += state[rep];
     }
     // Edges
