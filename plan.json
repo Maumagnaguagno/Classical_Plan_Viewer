@@ -1,0 +1,10 @@
+[
+  {"action": "pickup", "parameters": ["a"],
+   "precondition": ["clear a", "ontable a"],
+   "effect": ["holding a", "not clear a", "not ontable a"],
+   "description": "hold clear block a from table"},
+  {"action": "stack", "parameters": ["a", "b"],
+   "precondition": ["clear b", "holding a", "not = a b"],
+   "effect": ["clear a", "on a b", "not clear b", "not holding a"],
+   "description": "stack block a on clear block b"}
+]
