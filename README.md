@@ -16,5 +16,10 @@ The input format and visualization can be modified to support more elements.
 ]
 ```
 
-Modify the ``render()`` function to return a different DOT description to be visualized.  
+A URL query can be used to load a JSON file already hosted online.
+
+```
+https://maumagnaguagno.github.io/Classical_Plan_Viewer?from=https://maumagnaguagno.github.io/Classical_Plan_Viewer/plan.json
+```
+
 This project is the counterpart of [HTN Plan Viewer](../../../HTN_Plan_Viewer).
