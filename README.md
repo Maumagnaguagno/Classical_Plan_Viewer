@@ -5,6 +5,7 @@ Convert a JSON plan into a [DOT](https://www.graphviz.org/doc/info/lang.html) gr
 The plan format is made of an array of action objects, each action with at least a name, arrays of parameters, preconditions and effects.
 Arrays can be empty, while all leaf elements are strings.
 The input format and visualization can be modified to support more elements.
+The current implementation expects valid plans and does not validate the input.
 
 ```Json
 [
@@ -16,7 +17,7 @@ The input format and visualization can be modified to support more elements.
 ]
 ```
 
-A URL query can be used to load a JSON file already hosted online.
+An URL query can be used to load an online JSON file, [limited to GitHub](https://en.wikipedia.org/wiki/Cross-origin_resource_sharing).
 
 ```
 https://maumagnaguagno.github.io/Classical_Plan_Viewer?from=https://maumagnaguagno.github.io/Classical_Plan_Viewer/plan.json
